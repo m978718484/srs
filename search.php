@@ -1,9 +1,9 @@
 <?
 require('header.php');
 ?>
-<div data-role="page" id="home" >
+<div data-role="page" id="search" >
     <div data-role="header" data-position="fixed" data-theme="b">
-        <a href="index.php" class="ui-btn ui-corner-all ui-shadow ui-icon-home ui-btn-icon-left">主页</a>
+        <a href="index.php" class="ui-btn ui-corner-all ui-shadow ui-icon-back ui-btn-icon-left">返回</a>
         <h1>高级搜索</h1>
     </div>
     <input type="search" name="search-restaurants" id="search-restaurants" placeholder="工程名" />
