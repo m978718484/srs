@@ -1,24 +1,14 @@
-<?
-	require('header.php');
-       
-
-	$username=$_REQUEST['username'];
-	$passwd=$_REQUEST['password'];
-    echo("username: " . $username . " password " . $passwd); 
-
-	// session_start();
-	// $_SESSION['s_username']=$username;
-	// $url = "http://10.138.1.17:8082/EbidServices/checkLogin?userName=".$username."&password=".$passwd;
-	// echo $url;
-	// $handle = fopen($url,"rb");
-	// $content = "";
-	// while (!feof($handle)) {
-	//     $content .= fread($handle, 10000);
-	// }
-	// fclose($handle);
-	// $content = json_decode($content);
-
-	// if($content->errorFlag != 0)
-	// {
-	//     echo 'login fail!!';
+<?    
+	require('common.php');
+	$url = "http://10.138.1.17:8082/EbidServices/checkLogin?userName=ebid&password=3333302eac36ff5158dc5d3ff2db2447";
+	$content = getJson($url);
+	if($content->errorFlag != 0)
+	{
+	    echo 'Illegal Access API !';
+	}
+	else
+	{	
+		setCookie('token',$content->token,time()+3600*24*30);
+		Header("Location:index.php"); 
+	}
 ?>
