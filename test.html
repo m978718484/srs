@@ -1,0 +1,80 @@
+<!DOCTYPE html> 
+<html> 
+<head> 
+    <title>Page Title</title> 
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"> 
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.3.0/jquery.mobile-1.3.0.min.css" />
+    <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script src="http://code.jquery.com/mobile/1.3.0/jquery.mobile-1.3.0.min.js"></script>
+    <style>
+    .ui-grid-a .ui-block-a {
+        width: 37%;
+    }
+    .ui-grid-a .ui-block-b {
+        width: 63%;
+
+    }
+    </style>
+</head> 
+<body> 
+<script type="text/javascript">
+$(function(){
+    //刷新验证码
+    $('#imgcode')
+    .click(
+        function(){
+            $(this).attr('src','code.asp?t='+Math.random());
+        }
+    );
+    //验证登陆
+     $('#login').submit(function(){checkLogin();return false;});
+});
+//验证登陆
+function checkLogin()
+{
+    if ($('#userid').val()==''){$('#userid').focus();return false;}
+    if ($('#password').val()==''){$('#password').focus();return false;} 
+    if ($('#code').val()==''){$('#code').focus();return false;} 
+    $.ajax
+    ({
+        type        :'POST',
+        url         :'log.asp?action=login',
+        data        :'userid='+$('#userid').val()+'&password='+$('#password').val()+'&code='+$('#code').val(),
+        success     :function($str)
+        {
+            switch($str)
+            {
+                case '验证码错误':
+                    alert($str);
+                    $('#code').val('').focus();
+                    break;
+                case '账号错误':
+                    alert($str);
+                    $('#userid').val('').focus();
+                    break;
+                case '密码错误':
+                    alert($str);
+                    $('#password').val('').focus();
+                    break;
+                case '登陆成功':
+                    location.href="../manage.asp";
+                    break;
+                default:
+                    alert('未知错误\n\n'+$str);
+            }
+        }
+    });
+    return false;
+}
+</script>
+
+<form id="login">
+    <input id="userid" type="text" />
+    <input id="password" type="password" />
+    <input id="code" type="text" />
+    <img id="imgcode" src="../inc/code.asp" />
+    <input id="submit" type="submit" value="Login" />
+</form>
+</body>
+</html>
