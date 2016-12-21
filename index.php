@@ -1,10 +1,8 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <?
-        require('header.php');
-    ?>
-</head>
+<?
+    require('header.php');
+?>
 <body>
     <script type="text/javascript">
     $(document).on('pageinit', '#home', function(){   

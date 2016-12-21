@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <head>
 	<title>MinMax-SRS</title>
 	<meta charset="UTF-8">

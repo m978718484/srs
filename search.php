@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <?
-      require('header.php');
-    ?>
-  </head>
+  <?
+    require('header.php');
+  ?>
   <body>
     <script type="text/javascript">
     $(document).on('pageinit', '#search', function(){   
-        getData.getDataFn({function:"getListDefault"});
+      var mydate = new Date();
+      var startdate = AddDays(mydate,0);
+      var closeDate = AddDays(mydate,3);
+       getData.getDataFn({functionname:'getListFilter',startdate:startdate,closeDate:closeDate});
     });
 
     $(document).ready(function(){  
@@ -20,9 +21,7 @@
            var mydate = new Date();
            var startdate = AddDays(mydate,0);
            var closeDate = AddDays(mydate,parseInt(p1));
-           console.log(startdate);
-           console.log(closeDate);
-           getData.getDataFn({function:'getListFilter',startdate:startdate,closeDate:closeDate});
+           getData.getDataFn({functionname:'getListFilter',startdate:startdate,closeDate:closeDate});
         });  
       }); 
 
@@ -65,55 +64,58 @@
             $('#project-list').empty();
             console.log(obj.total);
            for (var i = obj.data.length - 1; i >= 0; i--) {
-                $('#project-list').append('<li><a href="javascript:location.href=\'detail.php?bidno='+ obj.data[i].bidno +'\'">'+ '【' + obj.data[i].area + '】' + obj.data[i].projectName + '</a></li>');
+                // $('#project-list').append('<li><a href="javascript:location.href=\'detail.php?bidno='+ obj.data[i].bidno +'\'">'+ '【' + obj.data[i].area + '】' + obj.data[i].projectName + '</a></li>');
+                // <li data-icon="false"><a href="#"><p style="white-space:pre-wrap;" align="center">【龍華】航空港區A05棟1樓新制程新增消防設施工程/港區A03樓1樓西側碼頭治具倉新增煙感工程</p><p align="center">工程類型:零星工程  2012-02-25 21:37</p></a></li>
+              var item = '<li>' + 
+                          '<a href="javascript:location.href=\'detail.php?bidno='+ obj.data[i].bidno +'\'">' +
+                            '<table width="100%"" border="0"><tr>' +
+                              '<td class="body">' + 
+                                '<div class="r_title">' +
+                                  '<b>项目类型：'+ obj.data[i].categorycode + '</b> ' +
+                                '</div>' +
+                                '<div class="TextContent"><a>[' + obj.data[i].area + '] </a>' +
+                                    obj.data[i].projectName +
+                                '</div>' +
+                                '<div class="opts">' +
+                                '<b>开始时间：'+ obj.data[i].starttime + '</b> ' +
+                                '</div>' +
+                              '</td>' + 
+                            '</tr></table></a></li>'
+
+
+                $('#project-list').append(item);
             }
             $('#project-list').listview('refresh');
+
+
+
+
         }
     }
 
     </script>
-    <div data-role="page" id="search" >
-        <div data-role="header" data-position="fixed" data-theme="b">
-            <a href="login.php" class="ui-btn ui-corner-all ui-shadow ui-icon-back ui-btn-icon-left">退出</a>
+    <div data-role="page" id="search" data-theme="b">
+        <div data-role="header" data-position="fixed">
+            <a href="javascript:location.href='login.php'" class="ui-btn ui-corner-all ui-shadow ui-icon-back ui-btn-icon-left">退出</a>
             <h1>公告动态</h1>
         </div>
         <!-- <input type="search" name="search-project" id="search-project" placeholder="工程名" /> -->
-        <select name="timeselect" id="timeselect" data-native-menu="false">
-           <option value="3">3天內</option>
-           <option value="7">1周內</option>
-           <option value="15">15天內</option>
-           <option value="30">1個月內</option>
-        </select>
-<!--          <div class="ui-grid-c">
-              <div class="ui-block-a">
-                <select id="a" data-role="none">
-                     <option value="1">地区</option>
-                </select>
-              </div>
-              <div class="ui-block-b">
-                <select id="b" data-role="none">
-                     <option value="2">类别</option>
-                </select>
-              </div>
-              <div class="ui-block-c">
-                <select id="c" data-role="none">
-                    <option value="3">范围</option>
-                </select>
-              </div>
-              <div class="ui-block-d">
-                <select id="d" data-role="none">
-                    <option value="4">时间</option>
-                </select>
-              </div>  
-          </div> -->
-        <div data-role="content">
+        <div>
+            <select name="timeselect" id="timeselect" data-native-menu="false">
+               <option value="3">3天內</option>
+               <option value="7">1周內</option>
+               <option value="15">15天內</option>
+               <option value="30">1个月內</option>
+            </select>
+        </div>
+        <div data-role="content" data-theme="b">
             <div>
                 <ul data-role="listview" id = "project-list">
                 <li data-role="list-divider"></li>
                 </ul>
             </div>
         </div>
-        <div data-role="footer" data-position="fixed" id="footer" data-theme="b">
+        <div data-role="footer" data-position="fixed" id="footer">
             <h1>Copy Right By MinMax-SRS</h1>
         </div>
         <!-- <div data-role="footer" data-position="fixed" id="footer" data-theme="b">
@@ -127,6 +129,12 @@
                 </div>
         </div> -->
     </div>
+        <style type="text/css">
+     .opts {text-align:right;}
+     .opts b {text-decoration:none;font-size:8pt;color:#666;}
+     .r_title {font-size:8pt;color:#666;}
+     .TextContent {white-space:pre-wrap;margin-top:5px;font-size:11pt;}
+  </style>
   </body>
 </html>
 
