@@ -27,6 +27,10 @@
     }
 </style>
 <script type="text/javascript">
+    $(document).ready(function(){  
+        $('#buttonpay').click(function(){checkPay();return false;});
+      }); 
+
     $(document).on('pageinit', '#detail', function(){  
        var bidno = getUrlParam('bidno');
        $.ajax({
@@ -68,12 +72,19 @@
         if (r!=null) return unescape(r[2]);
         return null;
     }
+
+    function checkPay()
+    {
+        alert('缴费成功！');
+        location.href = "mybidding.php"
+    }
 </script>
 <div data-role="page" id="detail" data-theme='b'>
     <div data-role="header" data-position="fixed">
         <a href="javascript:location.href='search.php'" class="ui-btn ui-corner-all ui-shadow ui-icon-back ui-btn-icon-left">返回</a>
         <h1>公告详情</h1>
     </div>
+    <a data-role="button" href="#pay" data-theme='a'>我要报名</a>
     <div data-role="content" id="content">
     <ul data-role="listview" id="listview"> 
         <li> 
@@ -188,10 +199,9 @@
         </li>                 
     </ul> 
     </div>
-    <a data-role="button" href="#pay" data-theme='a'>我要报名</a>
-    <div data-role="footer" data-position="fixed" id="footer" data-theme="b">
-        <h1>Copy Right By MinMax-SRS</h1>
-    </div>
+    <?
+        require('footer.php');
+    ?>
 </div>
 
 <div data-role="page" id="pay" data-theme='b'>
@@ -210,9 +220,9 @@
         <input type="radio" name="radio-choice-0" checked="checked" id="radio-choice-0b" class="custom">
         <label for="radio-choice-1b">支付宝支付</label>
         <input type="radio" name="radio-choice-0" id="radio-choice-1b" class="custom">
-        <a data-role="button">提  交</a>
+        <a data-role="button" id="buttonpay" href="mybidding.php">提  交</a>
     </div>
-    <div data-role="footer" data-position="fixed" id="footer" data-theme="b">
-        <h1>Copy Right By MinMax-SRS</h1>
-    </div>
+    <?
+        require('footer.php');
+    ?>
 </div>

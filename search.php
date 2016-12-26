@@ -73,7 +73,7 @@
                                 '<div class="r_title">' +
                                   '<b>项目类型：'+ obj.data[i].categorycode + '</b> ' +
                                 '</div>' +
-                                '<div class="TextContent"><a>[' + obj.data[i].area + '] </a>' +
+                                '<div class="TextContent"><b>[' + obj.data[i].area + '] </b>' +
                                     obj.data[i].projectName +
                                 '</div>' +
                                 '<div class="opts">' +
@@ -98,6 +98,7 @@
         <div data-role="header" data-position="fixed">
             <a href="javascript:location.href='login.php'" class="ui-btn ui-corner-all ui-shadow ui-icon-back ui-btn-icon-left">退出</a>
             <h1>公告动态</h1>
+            <a href="#advancedSearch" class="ui-btn ui-corner-all ui-shadow ui-icon-search ui-btn-icon-left">搜索</a>
         </div>
         <!-- <input type="search" name="search-project" id="search-project" placeholder="工程名" /> -->
         <div>
@@ -115,9 +116,9 @@
                 </ul>
             </div>
         </div>
-        <div data-role="footer" data-position="fixed" id="footer">
-            <h1>Copy Right By MinMax-SRS</h1>
-        </div>
+	    <?
+	        require('footer.php');
+	    ?>
         <!-- <div data-role="footer" data-position="fixed" id="footer" data-theme="b">
                 <div data-role="navbar">
                   <ul>
@@ -129,10 +130,44 @@
                 </div>
         </div> -->
     </div>
+
+    <div data-role="page" id="advancedSearch" data-theme="b">
+    <div data-role="header" data-position="fixed" >
+        <a href="#search" class="ui-btn ui-corner-all ui-shadow ui-icon-back ui-btn-icon-left">返回</a>
+        <h1>高级搜索</h1>
+    </div>
+    <input type="search" name="search-project" id="search-project" placeholder="工程名" />
+     <div class="ui-grid-c">
+          <div class="ui-block-a">
+            <select id="a" data-role="none">
+                 <option value="mon">地区</option>
+            </select>
+          </div>
+          <div class="ui-block-b">
+            <select id="b" data-role="none">
+                 <option value="mon">类别</option>
+            </select>
+          </div>
+          <div class="ui-block-c">
+            <select id="c" data-role="none">
+                <option value="mon">范围</option>
+            </select>
+          </div>
+          <div class="ui-block-d">
+            <select id="d" data-role="none">
+                <option value="mon">时间</option>
+            </select>
+          </div>  
+    </div>
+    <?
+        require('footer.php');
+    ?>
+</div>
+
         <style type="text/css">
      .opts {text-align:right;}
-     .opts b {text-decoration:none;font-size:8pt;color:#666;}
-     .r_title {font-size:8pt;color:#666;}
+     .opts b {text-decoration:none;font-size:8pt;color:#778899;}
+     .r_title {font-size:8pt;color:#778899;}
      .TextContent {white-space:pre-wrap;margin-top:5px;font-size:11pt;}
   </style>
   </body>

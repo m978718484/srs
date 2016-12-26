@@ -12,11 +12,13 @@
         }); 
         //提交
         $("#regist").bind("click", function() {
+              var formData = $("form#registform").serialize();
+              debugger;
               if (true) {
                 $.ajax({
                    type: "POST",
-                   url: "http://localhost:8080/note/servlet/Login",
-                   data: $("form#loginform").serialize(),
+                   url: "common.php",
+                   data: formData,
                    success: function(msg){
                      if(msg=='success'){
                         $.mobile.changePage("../content/first.html","slidedown", true, true);
@@ -63,6 +65,9 @@
 
         <label for="vendorCode">供应商代码</label>
         <input type="text" name="vendorCode" id="vendorCode"/>
+        <label for="phonecode">获取验证码</label>
+        <input type="text" name="phonecode" id="phonecode"/>
+        <input  type="hidden" name="functionname" id="functionname" value="register">
         <center>
             <a data-role="button" id="regist" data-theme="e">立即注册</a>
         </center>

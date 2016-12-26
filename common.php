@@ -131,7 +131,8 @@
   		  $content .= fread($handle, 10000);
   		}
   		fclose($handle);
-  		return zhconversion_hans($content);
+      return zhconversion_hans($content);
+  		// return $content;
   	}
 
 
