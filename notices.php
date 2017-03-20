@@ -9,20 +9,11 @@
       var mydate = new Date();
       var startdate = AddDays(mydate,0);
       var closeDate = AddDays(mydate,3);
-      getData.getDataFn({functionname:'getListFilter',startdate:startdate,closeDate:closeDate});
+      getData.getDataFn({functionname:'getBidNotices'});
     });
 
     $(document).ready(function(){  
       $('#loginout').click(function(){loginout();return false;});
-      $('#timeselect').change(function(){ 
-        var p1=$(this).children('option:selected').val();
-        $('#project-list').empty();
-        $('#project-list').listview('refresh');
-           var mydate = new Date();
-           var startdate = AddDays(mydate,0);
-           var closeDate = AddDays(mydate,parseInt(p1));
-           getData.getDataFn({functionname:'getListFilter',startdate:startdate,closeDate:closeDate});
-        });  
       }); 
 
     function loginout() {
@@ -41,6 +32,7 @@
       }); 
     }
 
+
     var getData={
       getDataFn:function (jsonPara) {
           $.ajax({
@@ -50,7 +42,7 @@
               dataType: "json",
               success: function (result) {
                 // alert(result);
-                // console.log(result);
+                console.log(result);
                 ajax.parseJSON(result);
               },
               error: function (request,error) {
@@ -91,7 +83,7 @@
     <div data-role="page" id="search">
         <div data-role="header" data-position="fixed" data-theme="b">
             <a id = 'loginout' class="ui-btn ui-corner-all ui-shadow ui-icon-back ui-btn-icon-left">退出</a>
-            <h1>招标信息</h1>
+            <h1>公告动态</h1>
             <a href="#advancedSearch" class="ui-btn ui-corner-all ui-shadow ui-icon-search ui-btn-icon-left">搜索</a>
         </div>
         <!-- <input type="search" name="search-project" id="search-project" placeholder="工程名" /> -->

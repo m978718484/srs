@@ -1,6 +1,6 @@
 ﻿<!DOCTYPE html>
 <html>
-<?
+<?php
   require('header.php');
 ?>
 <script type="text/javascript">
@@ -13,7 +13,7 @@
         //提交
         $("#regist").bind("click", function() {
               var formData = $("form#registform").serialize();
-              debugger;
+              // debugger;
               if (true) {
                 $.ajax({
                    type: "POST",
@@ -46,15 +46,13 @@
 <body> 
  
 <!-- begin first page -->
-<section data-role="page" data-theme="b">
-  <header data-role="header" data-type="horizontal">
+<section data-role="page">
+  <header data-role="header" data-type="horizontal" data-theme="b">
             <a href="javascript:location.href='login.php'" class="ui-btn ui-corner-all ui-shadow ui-icon-back ui-btn-icon-left">登录</a>
             <h1>会员注册</h1>
   </header>
   <div data-role="content" class="content">
         <form method="post" id="registform">
-        <label for="email">手机号码</label>
-        <input type="text" name="phoneno" id="phoneno"/>
         <label for="companyname">公司名称</label>
         <input type="text" name="companyname" id="companyname"/>
         <label for="password">密 码</label>
@@ -65,6 +63,8 @@
 
         <label for="vendorCode">供应商代码</label>
         <input type="text" name="vendorCode" id="vendorCode"/>
+        <label for="email">手机号码</label>
+        <input type="text" name="phoneno" id="phoneno"/>
         <label for="phonecode">获取验证码</label>
         <input type="text" name="phonecode" id="phonecode"/>
         <input  type="hidden" name="functionname" id="functionname" value="register">

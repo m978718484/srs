@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<?
+<?php
 	require('header.php'); 
 ?>
 <style type="text/css">
@@ -31,7 +31,7 @@
         $('#buttonpay').click(function(){checkPay();return false;});
       }); 
 
-    $(document).on('pageinit', '#detail', function(){  
+    $(document).on('pageinit', '#detail', function(){
        var bidno = getUrlParam('bidno');
        $.ajax({
             type:'GET',
@@ -42,14 +42,17 @@
                 ajax.parseJSON(result);
             },
             error: function (request,error) {
+                debugger;
                 alert('Network error has occurred please try again!');
             }
-        }); 
+        });
+
     });
     var ajax = {  
-        parseJSON:function(result){  
+        parseJSON:function(result){
            var obj = jQuery.parseJSON(result);
-           // console.log(obj.data)
+           // alert(obj.data)
+           console.log(obj);
            $('#area').text(obj.data.area);
            $('#projectName').text(obj.data.projectName);
            $('#bidno').text(obj.data.bidno);
@@ -63,28 +66,32 @@
            $('#creatortel').text(obj.data.creatortel);
            $('#payProject').text('项目名称：'+ obj.data.projectName);
            $('#payStartTime').text('开标时间：'+ obj.data.starttime);
-
+           if (obj.data.creatortel==''||obj.data.creatortel==null) {
+                $("#enter").remove();
+                var url =$.base64.encode(window.location.href);
+                $('#signup').attr('href',"javascript:location.href='login.php?url="+url+"'"); 
+                console.log(window.location.pathname);
+                console.log(window.location.search);
+           }
+           else{
+                $("#signup").remove();
+           }
         }
-    }
-    function getUrlParam(name){
-        var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
-        var r = window.location.search.substr(1).match(reg);
-        if (r!=null) return unescape(r[2]);
-        return null;
     }
 
     function checkPay()
     {
         alert('缴费成功！');
-        location.href = "mybidding.php"
+        location.href = "mybidding.php?p=1"
     }
 </script>
-<div data-role="page" id="detail" data-theme='b'>
-    <div data-role="header" data-position="fixed">
+<div data-role="page" id="detail">
+    <div data-role="header" data-position="fixed"  data-theme="b">
         <a href="javascript:location.href='search.php'" class="ui-btn ui-corner-all ui-shadow ui-icon-back ui-btn-icon-left">返回</a>
         <h1>公告详情</h1>
     </div>
-    <a data-role="button" href="#pay" data-theme='a'>我要报名</a>
+    <a data-role="button" href="#pay" id="enter" >我要报名</a>
+    <a data-role="button"  id="signup">登陸查看詳情</a>
     <div data-role="content" id="content">
     <ul data-role="listview" id="listview"> 
         <li> 
@@ -199,12 +206,12 @@
         </li>                 
     </ul> 
     </div>
-    <?
+    <?php
         require('footer.php');
     ?>
 </div>
 
-<div data-role="page" id="pay" data-theme='b'>
+<div data-role="page" id="pay">
     <div data-role="header" data-position="fixed" data-theme="b">
         <a href="#detail" class="ui-btn ui-corner-all ui-shadow ui-icon-back ui-btn-icon-left">返回</a>
         <h1>确认报名</h1>
@@ -222,7 +229,7 @@
         <input type="radio" name="radio-choice-0" id="radio-choice-1b" class="custom">
         <a data-role="button" id="buttonpay" href="mybidding.php">提  交</a>
     </div>
-    <?
+    <?php
         require('footer.php');
     ?>
 </div>

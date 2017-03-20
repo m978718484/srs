@@ -1,9 +1,6 @@
-<?
-  header("Content-type: text/html; charset=utf-8");
-  include('package/convert.php');
-  // $str = zhconversion_hant('马');
-  // $str1 = zhconversion_hans('馬');
-  // echo $str . $str1;
+<?php
+    header("Content-type: text/html; charset=utf-8");
+    include('package/convert.php');
     $function = $_REQUEST["functionname"];
     switch ($function)
     {
@@ -22,8 +19,32 @@
         case 'getVipLogin':
           getVipLogin();
         break;
+        case 'getMyBid':
+          getMyBid();
+        break;
         case 'register':
         break;
+        case 'getBidNotices':
+          getBidNotices();
+        break;
+        case 'loginout':
+          loginout();
+          break;
+    }
+
+    function getBidNotices(){
+        $token = getToken();
+        $url = "http://10.138.1.17/EbidServices/getBidNotices?token=".$token;
+        // echo $url;
+        echo json_encode(getJson($url));
+    }
+
+    function loginout()
+    {
+      session_start();
+      unset($_SESSION['VIPNAME']);
+      session_destroy();
+      echo '注销成功';
     }
 
     function getToken()
@@ -59,7 +80,6 @@
         $token = getToken();
         $date = date('Y-m-d');
         $url = "http://10.138.1.17/EbidServices/getBidList?startdate=".$date."&token=".$token;
-        // echo $url;
         echo json_encode(getJson($url));
     }
 
@@ -74,16 +94,18 @@
         // $bidno = $_REQUEST['bidno'];
         // $projectName = $_REQUEST['projectName'];
         $url = "http://10.138.1.17/EbidServices/getBidList?page=1&size=50&startdate=".$startdate."&token=".$token."&closeDate=".$closeDate;
-        // $url = "http://10.138.1.17/EbidServices/getBidList?Page=1&size=10&startdate=2016-0-12-13&token=651348c506d789396abd7b42b4dc146f1106bf0cce5faad3c7284a66dbcd4171dcd8b0b9c4398d5c&closeDate=2016-0-12-16";
         echo json_encode(getJson($url));
     }
 
-    //
     function getDetail()
     {
       $token = getToken();
     	$bidno = $_REQUEST["bidno"];
-      $url = "http://10.138.1.17/EbidServices/getBid?flag=0&bidno=".$bidno."&token=".$token;
+      $flag = '1';
+      if (checkLogin()==1) {
+        $flag = '0';
+      }
+      $url = "http://10.138.1.17/EbidServices/getBid?flag=". $flag."&bidno=".$bidno."&token=".$token;
       echo json_encode(getJson($url));
     }
 
@@ -93,25 +115,35 @@
       $userName = $_REQUEST["username"];
       $password = $_REQUEST["password"];
       $url = "http://10.138.1.17/EbidServices/login?token=".$token."&userName=".$userName."&password=".$password;
-      echo json_encode(getJson($url));
+      $temp = getJson($url);
+      $json_data =json_decode($temp);
+      if ($json_data->errorFlag=="E0000") {
+        SESSION_START();
+        $_SESSION['VIPNAME'] = $userName;
+      }
+      echo json_encode($temp);
+    }
 
-      // $json_data =json_decode(getJson($url));
-      // if ($json_data->errorFlag=="E0000") {
-      //   //設置Session
-      //   // session_start();
-      //   // $_SESSION['vipName'] = $userName;
-      //  // echo $json_data->errorFlag;
-      //   echo "E0000";
-      // }
-      // else
-      // {
-      //   echo "string";
-      // }
+    function getMyBid()
+    {
+      $token = getToken();
+      $page = $_REQUEST["page"];
+      $startdate = $_REQUEST["startdate"];
+      $closeDate = $_REQUEST["closedate"];
+      $username = '';
+      if (checkLogin()==1) {
+        $username = $_SESSION['VIPNAME'];
+        $url = "http://10.138.1.17/EbidServices/getMyBidList?token=".$token."&userName=".$username."&startdate=".$startdate."&closeDate=".$closeDate."&page=".$page."&size=6";
+        // echo $url;
+        echo json_encode(getJson($url));
+      }
+      else{
+        exit(0);
+      }
     }
 
     function register()
     {
-
       $token = getToken();
       $url = "http://10.138.1.17/EbidServices?token=".$token."&tleNo=".$telno."&name=".$name."&pwd=".$password."&vendorCode=".$vendorCode;
       $json_data =json_decode(getJson($url));
@@ -124,17 +156,34 @@
       }
     }
 
+    function checkLogin(){
+       session_start();
+       if (isset($_SESSION['VIPNAME'])) {
+         return 1;
+       }
+       else{
+        return 0;
+       }
+
+    }
+
   	function getJson($url){
-  		$handle = fopen($url,"rb");
-  		$content = "";
-  		while (!feof($handle)) {
-  		  $content .= fread($handle, 10000);
-  		}
-  		fclose($handle);
-      return zhconversion_hans($content);
-  		// return $content;
+        $content = file_get_contents($url);
+        // $handle = fopen($url,"rb");
+        // $content = "";
+        // while (!feof($handle)) {
+        //   try{
+        //       $content .= fread($handle, 10000);
+        //   }
+        //   catch(Exception $e){
+        //       break;
+        //   }
+        // }
+        // fclose($handle);
+        // $content = utf8_encode($content)
+        return zhconversion_hans($content);
+        // return $content;
+
   	}
-
-
 ?>
 

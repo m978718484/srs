@@ -1,6 +1,6 @@
     <!DOCTYPE html>
     <html>
-    <?
+    <?php
         require('header.php');
     ?>
     <body>
@@ -15,7 +15,7 @@
         var password = $('#password').val();
         if (username==''){$('#username').focus();return false;}
         if (password==''){$('#password').focus();return false;} 
-        // console.log(username);
+        // alter(username);
         $.ajax({
                 type:'POST',
                 data:{functionname:"getVipLogin",username:username,password:password},
@@ -23,12 +23,19 @@
                 dataType: "JSON",
                 success: function (result) {
                         var obj = jQuery.parseJSON(result);
-                        if ( obj.errorFlag == "E0000") {
-                            location.href = "search.php";
+                        if (obj.errorFlag == "E0000") {
+                            var url = getUrlParam('url');
+                            if (url!=''&&url!=null) {
+                                url = $.base64.decode(url);
+                                location.href = url;
+                            }
+                            else{
+                                location.href = "search.php";
+                            }
                         }
                         else{
                             // alert("帳號密碼錯誤");
-                            console.log(obj.errorFlag);
+                            console.log(obj);
                         }
                 },
                 error: function (request,error) {
@@ -36,9 +43,10 @@
                 }
         }); 
     }
+
     </script>
-     <div data-role="page" id="home" data-theme="b">
-            <div data-role="header" data-position="fixed">
+     <div data-role="page" id="home">
+            <div data-role="header" data-position="fixed" data-theme="b">
                 <h1>个人登录</h1>
             </div>
             <div data-role="content" id="homeContent">
@@ -49,7 +57,7 @@
                     <a data-role="button" href="javascript:location.href='register.php'" data-ajax="false" id = "btnLogin">注册</a>     
                 </form>
             </div>
-            <div data-role="footer" data-position="fixed" id="footer">
+            <div data-role="footer" data-position="fixed" id="footer" data-theme="b">
                 <h1>Copy Right By MinMax-SRS</h1>
             </div>
         </div>

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-<?
+<?php
     require('header.php');
 ?>
 <body>
@@ -44,7 +44,7 @@
             </ul>
             </div>
         </div>
-        <?
+        <?php
             require('footer.php');
         ?>
     </div>
