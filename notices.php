@@ -42,7 +42,7 @@
               dataType: "json",
               success: function (result) {
                 // alert(result);
-                console.log(result);
+                // console.log(result);
                 ajax.parseJSON(result);
               },
               error: function (request,error) {

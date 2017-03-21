@@ -29,10 +29,16 @@
 <script type="text/javascript">
     $(document).ready(function(){  
         $('#buttonpay').click(function(){checkPay();return false;});
+        
       }); 
 
     $(document).on('pageinit', '#detail', function(){
        var bidno = getUrlParam('bidno');
+       var fromHistory = getUrlParam('fromHistory');
+       if (fromHistory) {
+             $("#enter").remove();
+       }
+
        $.ajax({
             type:'GET',
             data:{functionname:"getDetail",bidno:bidno},
@@ -42,7 +48,6 @@
                 ajax.parseJSON(result);
             },
             error: function (request,error) {
-                debugger;
                 alert('Network error has occurred please try again!');
             }
         });
@@ -70,8 +75,8 @@
                 $("#enter").remove();
                 var url =$.base64.encode(window.location.href);
                 $('#signup').attr('href',"javascript:location.href='login.php?url="+url+"'"); 
-                console.log(window.location.pathname);
-                console.log(window.location.search);
+                // console.log(window.location.pathname);
+                // console.log(window.location.search);
            }
            else{
                 $("#signup").remove();
@@ -82,12 +87,12 @@
     function checkPay()
     {
         alert('缴费成功！');
-        location.href = "mybidding.php?p=1"
+        location.href = "mybidding.php"
     }
 </script>
 <div data-role="page" id="detail">
     <div data-role="header" data-position="fixed"  data-theme="b">
-        <a href="javascript:location.href='search.php'" class="ui-btn ui-corner-all ui-shadow ui-icon-back ui-btn-icon-left">返回</a>
+        <a href="javascript:void(0);" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-icon-back ui-btn-icon-left">返回</a>
         <h1>公告详情</h1>
     </div>
     <a data-role="button" href="#pay" id="enter" >我要报名</a>

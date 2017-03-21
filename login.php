@@ -20,7 +20,7 @@
                 type:'POST',
                 data:{functionname:"getVipLogin",username:username,password:password},
                 url:'common.php',
-                dataType: "JSON",
+                dataType: "json",
                 success: function (result) {
                         var obj = jQuery.parseJSON(result);
                         if (obj.errorFlag == "E0000") {
@@ -52,7 +52,7 @@
             <div data-role="content" id="homeContent">
                 <form action="index.php" method="get">     
                     用户名：<input type="text" name="username" id="username" value="2601917">                 
-                    密码：<input type="password" name="password" id="password" value="2601917">                 
+                    密码：<input type="password" name="password" id="password" value="password">                 
                     <a data-role="button" data-ajax="false" id = "btnLogin">登录</a>     
                     <a data-role="button" href="javascript:location.href='register.php'" data-ajax="false" id = "btnLogin">注册</a>     
                 </form>

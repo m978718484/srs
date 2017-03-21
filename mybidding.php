@@ -11,8 +11,8 @@
   </style>
     <script type="text/javascript">
      $(document).on('pageinit', '#page-mybid', function(){   
-        var p = getUrlParam('p');
-        myEnrolled(p);
+        // var p = getUrlParam('p');
+        myEnrolled(1);
     });
 
       function getMyDate(diff)
@@ -70,7 +70,7 @@
               url = '<a href="javascript:location.href=\'bidding.html?bidno='
            }
            else{
-              url = '<a href="javascript:location.href=\'detail.php?bidno='
+              url = '<a href="javascript:location.href=\'detail.php?fromHistory=1&bidno='
            }
            e.empty();
            for (var i = obj.data.length - 1; i >= 0; i--) {
