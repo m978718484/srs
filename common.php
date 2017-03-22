@@ -34,7 +34,7 @@
 
     function getBidNotices(){
         $token = getToken();
-        $url = "http://202.104.118.46/EbidServices/getBidNotices?token=".$token;
+        $url = "http://10.138.1.17/EbidServices/getBidNotices?token=".$token;
         // echo $url;
         echo json_encode(getJson($url));
     }
@@ -51,11 +51,11 @@
     {  
       $key = 'srsebidweixintokencache';
       $redis = new Redis();  
-      $redis->connect('202.104.118.46', 8084);  
+      $redis->connect('10.138.1.17', 8084);  
       $redis->auth('Foxconn88');  
       $token = $redis->get($key);
       if ($token=='') {
-          $url = 'http://202.104.118.46/EbidServices/checkLogin?userName=ebid&password=3333302eac36ff5158dc5d3ff2db2447';
+          $url = 'http://10.138.1.17/EbidServices/checkLogin?userName=ebid&password=3333302eac36ff5158dc5d3ff2db2447';
           $json_data =json_decode(getJson($url));
           if ($json_data->errorFlag=='E0000') {
             $redis->set($key,$json_data->token);
@@ -71,7 +71,7 @@
     function getCategory()
     {
       $token = getToken();
-      $url = "http://202.104.118.46/EbidServices/getCategoryList?token=".$token;
+      $url = "http://10.138.1.17/EbidServices/getCategoryList?token=".$token;
       echo json_encode(getJson($url));
     }
 
@@ -79,7 +79,7 @@
     {
         $token = getToken();
         $date = date('Y-m-d');
-        $url = "http://202.104.118.46/EbidServices/getBidList?startdate=".$date."&token=".$token;
+        $url = "http://10.138.1.17/EbidServices/getBidList?startdate=".$date."&token=".$token;
         echo json_encode(getJson($url));
     }
 
@@ -93,7 +93,7 @@
         // $bucode = $_REQUEST['bucode'];
         // $bidno = $_REQUEST['bidno'];
         // $projectName = $_REQUEST['projectName'];
-        $url = "http://202.104.118.46/EbidServices/getBidList?page=1&size=50&startdate=".$startdate."&token=".$token."&closeDate=".$closeDate;
+        $url = "http://10.138.1.17/EbidServices/getBidList?page=1&size=50&startdate=".$startdate."&token=".$token."&closeDate=".$closeDate;
         echo json_encode(getJson($url));
     }
 
@@ -105,7 +105,7 @@
       if (checkLogin()==1) {
         $flag = '0';
       }
-      $url = "http://202.104.118.46/EbidServices/getBid?flag=". $flag."&bidno=".$bidno."&token=".$token;
+      $url = "http://10.138.1.17/EbidServices/getBid?flag=". $flag."&bidno=".$bidno."&token=".$token;
       echo json_encode(getJson($url));
     }
 
@@ -114,7 +114,7 @@
       $token = getToken();
       $userName = $_REQUEST["username"];
       $password = $_REQUEST["password"];
-      $url = "http://202.104.118.46/EbidServices/login?token=".$token."&userName=".$userName."&password=".$password;
+      $url = "http://10.138.1.17/EbidServices/login?token=".$token."&userName=".$userName."&password=".$password;
       $temp = getJson($url);
       $json_data =json_decode($temp);
       if ($json_data->errorFlag=="E0000") {
@@ -133,7 +133,7 @@
       $username = '';
       if (checkLogin()==1) {
         $username = $_SESSION['VIPNAME'];
-        $url = "http://202.104.118.46/EbidServices/getMyBidList?token=".$token."&userName=".$username."&startdate=".$startdate."&closeDate=".$closeDate."&page=".$page."&size=6";
+        $url = "http://10.138.1.17/EbidServices/getMyBidList?token=".$token."&userName=".$username."&startdate=".$startdate."&closeDate=".$closeDate."&page=".$page."&size=6";
         // echo $url;
         echo json_encode(getJson($url));
       }
@@ -145,7 +145,7 @@
     function register()
     {
       $token = getToken();
-      $url = "http://202.104.118.46/EbidServices?token=".$token."&tleNo=".$telno."&name=".$name."&pwd=".$password."&vendorCode=".$vendorCode;
+      $url = "http://10.138.1.17/EbidServices?token=".$token."&tleNo=".$telno."&name=".$name."&pwd=".$password."&vendorCode=".$vendorCode;
       $json_data =json_decode(getJson($url));
       if ($json_data->status=="E0000") {
         echo $json_data->errorFlag;
