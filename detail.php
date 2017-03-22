@@ -56,6 +56,16 @@
     var ajax = {  
         parseJSON:function(result){
            var obj = jQuery.parseJSON(result);
+           if (obj.data.creatortel==''||obj.data.creatortel==null) {
+                $("#enter").remove();
+                var url =$.base64.encode(window.location.href);
+                $('#signup').attr('href',"javascript:location.href='login.php?url="+url+"'"); 
+                // console.log(window.location.pathname);
+                // console.log(window.location.search);
+           }
+           else{
+                $("#signup").remove();
+           }
            // alert(obj.data)
            console.log(obj);
            $('#area').text(obj.data.area);
@@ -71,16 +81,6 @@
            $('#creatortel').text(obj.data.creatortel);
            $('#payProject').text('项目名称：'+ obj.data.projectName);
            $('#payStartTime').text('开标时间：'+ obj.data.starttime);
-           if (obj.data.creatortel==''||obj.data.creatortel==null) {
-                $("#enter").remove();
-                var url =$.base64.encode(window.location.href);
-                $('#signup').attr('href',"javascript:location.href='login.php?url="+url+"'"); 
-                // console.log(window.location.pathname);
-                // console.log(window.location.search);
-           }
-           else{
-                $("#signup").remove();
-           }
         }
     }
 
