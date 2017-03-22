@@ -17,4 +17,5 @@
  //      echo $fromuser
       include("common.php");
       getMyBid();
+http://localhost/EbidServices/login?token=a16e5eb12e308ce04b5ab4d768728e75435b0b1d09ddd6bccb826954a9ef272a9c424d45628cc956&userName=2601917&password=password
 ?>
