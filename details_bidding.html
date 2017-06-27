@@ -103,30 +103,29 @@
 					var id = getUrlParam('id');
 					console.log(id);
 
-					fomtime();
+					ShowCountDown();
 
 				});
 			})(mui);
-			var timestamp = 1498473000;
-			function fomtime() {
-				var c = new Date(timestamp * 1000) 
-				var b = new Date();
-//				var c = new Date();
-//				c.setTime(timestamp);
-				var day1 = b.getDate(); //为方便调用，把天数、小时等单独定义
-				var hours1 = b.getHours();
-				var minu1 = b.getMinutes();
-				var seco1 = b.getSeconds();
-				var day2 = c.getDate();
-				var hours2 = c.getHours();
-				var minu2 = c.getMinutes();
-				var seco2 = c.getSeconds();
-				var day = day2 - day1;
-				var hours = hours2 - hours1;
-				var minu = minu2 - minu1;
-				var seco = seco2 - seco1;
-				document.getElementById('divdown1').innerHTML = seco;
-				setTimeout("fomtime()", 1000);
+			var timestamp = 1498559430;
+			var interval = 1000;
+
+			function ShowCountDown() {
+				var now = new Date();
+				var endDate = new Date(timestamp * 1000);
+				var leftTime = endDate.getTime() - now.getTime();
+				var leftsecond = parseInt(leftTime / 1000); //var day1=parseInt(leftsecond/(24*60*60*6)); 
+				var day1 = Math.floor(leftsecond / (60 * 60 * 24));
+				var hour = Math.floor((leftsecond - day1 * 24 * 60 * 60) / 3600);
+				var minute = Math.floor((leftsecond - day1 * 24 * 60 * 60 - hour * 3600) / 60);
+				var second = Math.floor(leftsecond - day1 * 24 * 60 * 60 - hour * 3600 - minute * 60);
+				var cc = document.getElementById("divdown1");
+				if(minute == 0 && second == 0) {
+					window.location="details_results.html?" + getUrlParam('id');
+				} else {
+					cc.innerHTML = day1 + "天" + hour + "小时" + minute + "分" + second + "秒";
+					setTimeout("ShowCountDown()", 1000);
+				}
 			}
 		</script>
 	</body>
