@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>钜商网-知名企业招标拍卖平台</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<link rel="stylesheet" href="css/mui.min.css">
+		<style>
+			.radio_inline {
+				display: inline-block;
+				width: 100%;
+				padding-left: 33px;
+			}
+			
+			.mui-radio label {
+				width: 30%;
+				padding-left: 26px;
+			}
+			
+			.mui-radio input[type=radio] {
+				width: 30%;
+				right: auto;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav" style="background-color: rgb(29, 38, 60);">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title" style="color:orangered;">项目搜索</h1>
+		</header>
+		<div class="mui-content">
+			<form id="inputForm">
+				<div class="mui-content-padded" style="margin: 1px;">
+					<div class="mui-input-row mui-search">
+						<input style="background-color: white;" id="searchName" 
+						type="search" class="mui-input-clear" placeholder="标案名称">
+					</div>
+				</div>
+				<div class="mui-table">
+					<div class="mui-table-cell mui-text-center">
+						<input name="radio" type="radio" class="radio" value="1">
+						<label>近一天</label>
+					</div>
+					<div class="mui-table-cell mui-text-center">
+						<input name="radio" type="radio" class="radio" value="7" checked>
+						<label>近一周</label>
+					</div>
+					<div class="mui-table-cell mui-text-center">
+						<input name="radio" type="radio" class="radio" value="14">
+						<label>近二周</label>
+					</div>
+				</div>
+				<br />
+				<div class="mui-table">
+					<div class="mui-table-cell mui-text-center">
+						<input name="radio" type="radio" class="radio" value="30">
+						<label>近一月</label>
+					</div>
+					<div class="mui-table-cell mui-text-center">
+						<input name="radio" type="radio" class="radio" value="90">
+						<label>近三月</label>
+					</div>
+					<div class="mui-table-cell mui-text-center">
+						<input name="radio" type="radio" class="radio" value="365">
+						<label>近一年</label>
+					</div>
+				</div>
+				<br />
+				<ul class="mui-table-view">
+					<li class="mui-table-view-cell mui-collapse">
+						<a class="mui-navigate-right mui-icon mui-icon-location" href="#">所在地区</a>
+						<div id="location" class="mui-collapse-content">
+						</div>
+					</li>
+					<li class="mui-table-view-cell mui-collapse">
+						<a class="mui-navigate-right mui-icon mui-icon-paperplane" href="#">所属类别</a>
+						<div id="category" class="mui-collapse-content">
+
+						</div>
+					</li>
+				</ul>
+				<div class="mui-button-row">
+					<button id="search" type="button" class="mui-btn mui-btn-primary mui-icon mui-icon-search">
+		            搜索
+		        	</button>
+					<button type="reset" class="mui-btn mui-btn-primary mui-icon mui-icon-reload">
+		   			重置
+		     		</button>
+				</div>
+			</form>
+		</div>
+		<script src="js/mui.min.js"></script>
+		<script type="text/javascript">
+			mui.init();
+			(function($) {
+				$.ready(function() {
+					var data_location = JSON.parse('{"data":[{"id":"1","name":"龙华"},{"id":"2","name":"鸿观"},{"id":"3","name":"上海"},{"id":"4","name":"晋城"},{"id":"5","name":"烟台"},{"id":"6","name":"北京"},{"id":"7","name":"增城"},{"id":"8","name":"太原"},{"id":"9","name":"佛山"},{"id":"10","name":"营口"},{"id":"11","name":"廊坊"},{"id":"12","name":"武汉"},{"id":"13","name":"淮安"},{"id":"14","name":"昆山"},{"id":"15","name":"宝科"},{"id":"16","name":"台北"},{"id":"17","name":"美国"},{"id":"18","name":"杰克"},{"id":"19","name":"宁波"},{"id":"20","name":"越南"},{"id":"21","name":"天津"},{"id":"22","name":"重庆"},{"id":"23","name":"澳洲"},{"id":"24","name":"成都"},{"id":"25","name":"郑州"},{"id":"26","name":"南宁"},{"id":"27","name":"惠州"},{"id":"28","name":"中山"},{"id":"29","name":"衡阳"},{"id":"30","name":"兰考"},{"id":"31","name":"香港"},{"id":"32","name":"台湾"},{"id":"33","name":"巴西"},{"id":"34","name":"济源"},{"id":"35","name":"长沙"},{"id":"36","name":"丰城"},{"id":"37","name":"赣州"},{"id":"38","name":"观澜"},{"id":"39","name":"贵州"},{"id":"40","name":"鹤壁"},{"id":"41","name":"杭州"},{"id":"42","name":"菏泽"},{"id":"43","name":"爱尔兰"},{"id":"44","name":"墨西哥"},{"id":"45","name":"新加坡"},{"id":"46","name":"贵阳"}]}');
+					var data_categroy = JSON.parse('{"data":[{"id":"1","name":"专业设备及备品类"},{"id":"2","name":"仪器仪表"},{"id":"3","name":"出版印刷及包装"},{"id":"4","name":"办公用品"},{"id":"5","name":"化学材料"},{"id":"6","name":"园林绿化"},{"id":"7","name":"土木工程"},{"id":"8","name":"工业用漆"},{"id":"9","name":"工业用燃料"},{"id":"10","name":"废料"},{"id":"11","name":"机械五金材料"},{"id":"12","name":"机电工程"},{"id":"13","name":"消防工程"},{"id":"14","name":"消防类材料"},{"id":"15","name":"生活用品"},{"id":"16","name":"电子产品/物料"},{"id":"17","name":"装饰装修"},{"id":"18","name":"设备维修"},{"id":"19","name":"设备采购"},{"id":"20","name":"零星工程"},{"id":"21","name":"食品采购"}]}');
+					var locationDivE = document.getElementById("location");
+					var categoryDivE = document.getElementById("category");
+					var innerHtml = '<div class="mui-table">';
+					for(i = 0; i < data_location.data.length; i++) {
+						if((i + 1) % 3 == 0) {
+							innerHtml += '<div class="mui-table-cell mui-text-center">';
+							innerHtml += '<input value="' + data_location.data[i].id + '" name="checkbox" type="checkbox" class="checkbox-location">';
+							innerHtml += '<label>' + data_location.data[i].name + '</label></div>';
+							innerHtml += '</div><br/><div class="mui-table">';
+						} else {
+							innerHtml += '<div class="mui-table-cell mui-text-center">';
+							innerHtml += '<input value="' + data_location.data[i].id + '" name="checkbox" type="checkbox" class="checkbox-location">';
+							innerHtml += '<label>' + data_location.data[i].name + '</label></div>';
+						}
+					}
+					locationDivE.innerHTML = innerHtml;
+					innerHtml = '<div class="mui-table">';
+					for(i = 0; i < data_categroy.data.length; i++) {
+						if((i + 1) % 3 == 0) {
+							innerHtml += '<div class="mui-table-cell mui-text-center">';
+							innerHtml += '<input value="' + data_categroy.data[i].id + '" name="checkbox" type="checkbox" class="checkbox-category">';
+							innerHtml += '<label>' + data_categroy.data[i].name + '</label></div>';
+							innerHtml += '</div><br/><div class="mui-table">';
+						} else {
+							innerHtml += '<div class="mui-table-cell mui-text-center">';
+							innerHtml += '<input value="' + data_categroy.data[i].id + '" name="checkbox" type="checkbox" class="checkbox-category">';
+							innerHtml += '<label>' + data_categroy.data[i].name + '</label></div>';
+						}
+					}
+					categoryDivE.innerHTML = innerHtml;
+					document.getElementById("searchName").focus();
+				});
+			})(mui);
+
+			function getRadioRes(className) {
+				var rdsObj = document.getElementsByClassName(className);
+				var checkVal = null;
+				for(i = 0; i < rdsObj.length; i++) {
+					if(rdsObj[i].checked) {
+						checkVal = rdsObj[i].value;
+					}
+				}
+				return checkVal;
+			}
+
+			function getCheckBoxRes(className) {
+				var rdsObj = document.getElementsByClassName(className);
+				var checkVal = new Array();
+				var k = 0;
+				for(i = 0; i < rdsObj.length; i++) {
+					if(rdsObj[i].checked) {
+						checkVal[k] = rdsObj[i].value;
+						k++;
+					}
+				}
+				return checkVal;
+			}
+
+			document.getElementById('search').addEventListener('tap', function() {
+				var searchName = document.getElementById('searchName').value;
+				var radio_date = getRadioRes('radio');
+				var checkbox_category = getCheckBoxRes('checkbox-category');
+				var checkbox_location = getCheckBoxRes('checkbox-location');
+				//				console.log(radio_date);
+				//				console.log(checkbox_location);
+				//				console.log(checkbox_category);
+				var paras = '{"searchName":"' + searchName + '","date":"' + radio_date + '","category":"' + checkbox_category + '","location":"' + checkbox_location + '"}';
+				var temp = window.btoa(unescape(encodeURIComponent(paras)))
+				window.location.href = 'search_list_main.html?paras=' + temp;
+			});
+			document.getElementById("searchName").addEventListener("keydown", function(e) {
+				if(13 == e.keyCode) { //点击了“搜索”  			
+					document.activeElement.blur(); //隐藏软键盘 
+					var btn = document.getElementById('search');
+					mui.trigger(btn, 'tap');
+				}
+			},true);
+		</script>
+	</body>
+
+</html>

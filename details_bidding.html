@@ -1,0 +1,134 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>钜商网-知名企业招标拍卖平台</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.min.css" rel="stylesheet" />
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav" style="background-color: rgb(29, 38, 60);">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title" style="color:orangered;">竞价详情</h1>
+		</header>
+		<div class="mui-content">
+			<div class="mui-scroll">
+				<!-- 主界面具体展示内容 -->
+				<div id="slider" class="mui-slider">
+					<div class="mui-slider-group mui-slider-loop">
+						<!-- 额外增加的一个节点(循环轮播：第一个节点是最后一张轮播) -->
+						<div class="mui-slider-item mui-slider-item-duplicate">
+							<a href="#">
+								<img src="images/801a2351-3b64-4f56-a884-584f5a73b127.jpg">
+							</a>
+						</div>
+						<!-- 第一张 -->
+						<!--<div class="mui-slider-item">
+							<a href="#">
+								<img src="images/banner-1.jpg">
+							</a>
+						</div>-->
+						<!-- 第二张 -->
+						<!--<div class="mui-slider-item">
+							<a href="#">
+								<img src="images/banner-2.jpg">
+							</a>
+						</div>-->
+						<!-- 第三张 -->
+						<!--<div class="mui-slider-item">
+							<a href="#">
+								<img src="images/banner-3.jpg">
+							</a>
+						</div>-->
+						<!-- 第四张 -->
+						<div class="mui-slider-item">
+							<a href="#">
+								<img src="images/801a2351-3b64-4f56-a884-584f5a73b127.jpg">
+							</a>
+						</div>
+						<!-- 额外增加的一个节点(循环轮播：最后一个节点是第一张轮播) -->
+						<!--<div class="mui-slider-item mui-slider-item-duplicate">
+							<a href="#">
+								<img src="images/banner-1.jpg">
+							</a>
+						</div>-->
+					</div>
+				</div>
+
+				<div class="mui-table">
+					<div class="mui-table-cell mui-col-xs-12">
+						<h5 class="mui-ellipsis-2" style="-webkit-line-clamp:10;font-family: '微软雅黑';">SMT汰旧设备波峰焊锡炉、自动贴片机、自动光学检测机、德律AOI测试机台共8台设备转让(标5)</h5>
+						<p class="mui-h6 mui-ellipsis">(P20170608001) 区域：龙华 </p>
+						<p class="mui-h6 mui-ellipsis">距离结束仅剩: <span id="divdown1">
+							
+						</span> </p>
+						<p><button id="entered" type="button" class="mui-btn mui-btn-royal">我要参与<span class="mui-badge mui-badge-royal">100人已报名</span></button></p>
+						<p class="mui-h6 mui-ellipsis">当前价格：236000.0RMB</p>
+						<p class="mui-h6 mui-ellipsis">竞价类别：竞总价 出价0次</p>
+						<p class="mui-h6 mui-ellipsis">保 证 金： 50,000.00RMB 不成交则规定时间内退还</p>
+						<p class="mui-h6 mui-ellipsis">参与资格：
+							<a id="showInfo" class="mui-action-menu mui-icon mui-icon-info-filled mui-pull-caption"></a>
+						</p>
+						<p class="mui-h6 mui-ellipsis">起拍价： 236,000.00RMB </p>
+						<p class="mui-h6 mui-ellipsis">竞价涨幅： 7,300.00RMB(或其整数倍)</p>
+						<p class="mui-h6 mui-ellipsis">评估总价： 403,000.00RMB </p>
+						<p class="mui-h6 mui-ellipsis">保留价： 有</p>
+						<p class="mui-h6 mui-ellipsis">竞价开始时间： 2017-06-26 09:00 </p>
+						<p class="mui-h6 mui-ellipsis">竞价结束时间： 2017-06-26 17:30</p>
+						<p class="mui-h6 mui-ellipsis">报名截止时间： 2017-06-17 17:30 </p>
+						<p class="mui-h6 mui-ellipsis">保证金缴纳截止时间： 2017-06-23 17:30</p>
+						<p class="mui-h6 mui-ellipsis">平台服务费： 成交价总额×3%</p>
+						<p class="mui-h6 mui-ellipsis">报名费： 200.00 RMB</p>
+						<p class="mui-h6 mui-ellipsis">保证金： 50,000.00RMB</p>
+						<p class="mui-h6 mui-ellipsis">转让方名称： 富士康科技集团SMT技委会</p>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script src="js/mui.min.js"></script>
+		<script src="js/common.js"></script>
+		<script type="text/javascript">
+			mui.init();
+
+			(function($) {
+				document.getElementById("showInfo").addEventListener('tap', function() {
+					mui.alert('1.意向受让方具有标的物的回收资质及相应的生产加工类型 ;\n2.具有良好的商业信誉、财务状况和支付能力;\n3.定约后,需按转让方要求安排人力\车辆\工具并及时对货物进行打包\清运；\n资质组成：营业执照，税务登记证、银行开户证明复印件盖章，联系人的身份证复印件及法人授权委托书（授权人需签字）。', '参与资格');
+				});
+				document.getElementById("entered").addEventListener('tap', function() {
+					window.location = "pay.html";
+				});
+				$.ready(function() {
+					var id = getUrlParam('id');
+					console.log(id);
+
+					fomtime();
+
+				});
+			})(mui);
+			var timestamp = 1498473000;
+			function fomtime() {
+				var c = new Date(timestamp * 1000) 
+				var b = new Date();
+//				var c = new Date();
+//				c.setTime(timestamp);
+				var day1 = b.getDate(); //为方便调用，把天数、小时等单独定义
+				var hours1 = b.getHours();
+				var minu1 = b.getMinutes();
+				var seco1 = b.getSeconds();
+				var day2 = c.getDate();
+				var hours2 = c.getHours();
+				var minu2 = c.getMinutes();
+				var seco2 = c.getSeconds();
+				var day = day2 - day1;
+				var hours = hours2 - hours1;
+				var minu = minu2 - minu1;
+				var seco = seco2 - seco1;
+				document.getElementById('divdown1').innerHTML = seco;
+				setTimeout("fomtime()", 1000);
+			}
+		</script>
+	</body>
+
+</html>

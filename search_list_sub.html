@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<link rel="stylesheet" href="./css/mui.min.css">
+		<style type="text/css">
+			.my-font {
+				font-weight: bold;
+				color: #000000;
+			}
+		</style>
+	</head>
+
+	<body>
+		<!--下拉刷新容器-->
+		<div id="pullrefresh" class="mui-content mui-scroll-wrapper">
+			<div class="mui-scroll">
+				<!--数据列表-->
+				<ul class="mui-table-view mui-table-view-striped mui-table-view-condensed">
+				</ul>
+			</div>
+		</div>
+		</div>
+		<script src="./js/mui.min.js"></script>
+		<script>
+			mui.init({
+				pullRefresh: {
+					container: '#pullrefresh',
+					down: {
+						callback: pulldownRefresh
+					},
+					up: {
+						contentrefresh: '正在加载...',
+						callback: pullupRefresh
+					}
+				}
+			});
+			(function($) {
+				$.ready(function() {
+					var paras=getUrlParam('paras');
+					var data = window.decodeURIComponent(escape(window.atob(paras)));
+					var obj = JSON.parse(data);
+					console.log(obj);
+					pulldownRefresh();
+				});
+			})(mui);
+
+			function getUrlParam(name) {
+				var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+				var r = window.location.search.substr(1).match(reg);
+				if(r != null) {
+					return unescape(r[2]);
+				} else {
+					return null;
+				}
+			}
+			/**
+			 * 下拉刷新具体业务实现
+			 */
+			function pulldownRefresh() {
+				setTimeout(function() {
+					var table = document.body.querySelector('.mui-table-view');
+					var cells = document.body.querySelectorAll('.mui-table-view-cell');
+					for(var i = cells.length, len = i + 6; i < len; i++) {
+						var li = document.createElement('li');
+						li.className = 'mui-table-view-cell';
+						var liInnerHTML = '<div class="mui-table">';
+						liInnerHTML += '';
+						liInnerHTML += '<div class="mui-table-cell mui-col-xs-10">';
+						liInnerHTML += '<h6 class="mui-ellipsis my-font"><b>SMT汰旧设备转让（自动贴片机）专案（标' + (i + 1) + '）</b></h6>';
+						liInnerHTML += '<h6>竞价类别：竞总价</h6>';
+						liInnerHTML += '<p class="mui-h6 mui-ellipsis" style="color: red;">竞价开始时间：2017-06-19 09:00</p>';
+						liInnerHTML += '</div>';
+						liInnerHTML += '<div class="mui-table-cell mui-col-xs-2 mui-text-right">';
+						liInnerHTML += '<span class="mui-h5" style="color: blue;"> 龙华 </span>';
+						liInnerHTML += '<span class="mui-badge mui-badge-primary"> 3 </span>';
+						liInnerHTML += '</div>';
+						liInnerHTML += '</div>';
+						li.innerHTML = liInnerHTML;
+						//下拉刷新，新纪录插到最前面；
+						table.insertBefore(li, table.firstChild);
+					}
+					mui('#pullrefresh').pullRefresh().endPulldownToRefresh(); //refresh completed
+				}, 1500);
+			}
+			var count = 0;
+			/**
+			 * 上拉加载具体业务实现
+			 */
+			function pullupRefresh() {
+				setTimeout(function() {
+					mui('#pullrefresh').pullRefresh().endPullupToRefresh((++count > 2)); //参数为true代表没有更多数据了。
+					var table = document.body.querySelector('.mui-table-view');
+					var cells = document.body.querySelectorAll('.mui-table-view-cell');
+					for(var i = cells.length, len = i + 5; i < len; i++) {
+						var li = document.createElement('li');
+						li.className = 'mui-table-view-cell';
+						var liInnerHTML = '<div class="mui-table">';
+						liInnerHTML += '';
+						liInnerHTML += '<div class="mui-table-cell mui-col-xs-10">';
+						liInnerHTML += '<h6 class="mui-ellipsis my-font"><b>SMT汰旧设备转让（自动贴片机）专案（标' + (i + 1) + '）</b></h6>';
+						liInnerHTML += '<h6>竞价类别：竞总价</h6>';
+						liInnerHTML += '<p class="mui-h6 mui-ellipsis" style="color: red;">竞价开始时间：2017-06-19 09:00</p>';
+						liInnerHTML += '</div>';
+						liInnerHTML += '<div class="mui-table-cell mui-col-xs-2 mui-text-right">';
+						liInnerHTML += '<span class="mui-h5" style="color: blue;"> 龙华 </span>';
+						liInnerHTML += '<span class="mui-badge mui-badge-primary"> 3 </span>';
+						liInnerHTML += '</div>';
+						liInnerHTML += '</div>';
+						li.innerHTML = liInnerHTML;
+						table.appendChild(li);
+					}
+				}, 1500);
+			}
+		</script>
+	</body>
+
+</html>

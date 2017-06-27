@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>钜商网-知名企业招标拍卖平台</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<link rel="stylesheet" href="css/mui.min.css">
+		<style type="text/css">
+			html,
+			body {
+				background-color: #efeff4;
+			}
+			
+			.mui-bar~.mui-content .mui-fullscreen {
+				top: 44px;
+				height: auto;
+			}
+			
+			.mui-pull-top-tips {
+				position: absolute;
+				top: -20px;
+				left: 50%;
+				margin-left: -25px;
+				width: 40px;
+				height: 40px;
+				border-radius: 100%;
+				z-index: 1;
+			}
+			
+			.mui-bar~.mui-pull-top-tips {
+				top: 24px;
+			}
+			
+			.mui-pull-top-wrapper {
+				width: 42px;
+				height: 42px;
+				display: block;
+				text-align: center;
+				background-color: #efeff4;
+				border: 1px solid #ddd;
+				border-radius: 25px;
+				background-clip: padding-box;
+				box-shadow: 0 4px 10px #bbb;
+				overflow: hidden;
+			}
+			
+			.mui-pull-top-tips.mui-transitioning {
+				-webkit-transition-duration: 200ms;
+				transition-duration: 200ms;
+			}
+			
+			.mui-pull-top-tips .mui-pull-loading {
+				/*-webkit-backface-visibility: hidden;
+				-webkit-transition-duration: 400ms;
+				transition-duration: 400ms;*/
+				margin: 0;
+			}
+			
+			.mui-pull-top-wrapper .mui-icon,
+			.mui-pull-top-wrapper .mui-spinner {
+				margin-top: 7px;
+			}
+			
+			.mui-pull-top-wrapper .mui-icon.mui-reverse {
+				/*-webkit-transform: rotate(180deg) translateZ(0);*/
+			}
+			
+			.mui-pull-bottom-tips {
+				text-align: center;
+				background-color: #efeff4;
+				font-size: 15px;
+				line-height: 40px;
+				color: #777;
+			}
+			
+			.mui-pull-top-canvas {
+				overflow: hidden;
+				background-color: #fafafa;
+				border-radius: 40px;
+				box-shadow: 0 4px 10px #bbb;
+				width: 40px;
+				height: 40px;
+				margin: 0 auto;
+			}
+			
+			.mui-pull-top-canvas canvas {
+				width: 40px;
+			}
+			
+			.mui-slider-indicator.mui-segmented-control {
+				background-color: #efeff4;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav" style="background-color:rgb(29, 38, 60);">
+			<a class="mui-icon mui-icon-bars mui-pull-left" href="setting.html"></a>
+			<!--<a id="info" class="mui-icon mui-icon-chat mui-pull-right" style="color: #999;"></a>-->
+			<div style="padding-left: 20%;width: 80%; position: absolute;">
+				<div class="mui-input-row mui-search">
+					<input id="search" type="search" placeholder="项目搜索" 
+					style="background-color: white;"
+					onfocus="document.activeElement.blur();window.location='search.html';">
+				</div>
+			</div>
+		</header>
+		<div class="mui-content">
+			<div id="slider" class="mui-slider mui-fullscreen">
+				<div id="sliderSegmentedControl" class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+					<div class="mui-scroll">
+						<a class="mui-control-item mui-active" href="#item1mobile">
+							公告
+						</a>
+						<a class="mui-control-item" href="#item2mobile">
+							竞价
+						</a>
+						<a class="mui-control-item" href="#item3mobile">
+							结果公示
+						</a>
+						<a class="mui-control-item" href="#item4mobile">
+							最新消息
+						</a>
+					</div>
+				</div>
+				<div class="mui-slider-group">
+					<div id="item1mobile" class="mui-slider-item mui-control-content mui-active">
+						<div id="scroll1" class="mui-scroll-wrapper">
+							<div class="mui-scroll">
+								<ul class="mui-table-view">
+									<!--<li class="mui-table-view-cell">
+										第1个选项卡子项-1
+									</li>-->
+								</ul>
+							</div>
+						</div>
+					</div>
+					<div id="item2mobile" class="mui-slider-item mui-control-content">
+						<div class="mui-scroll-wrapper">
+							<div class="mui-scroll">
+								<ul class="mui-table-view">
+									<!--<li class="mui-table-view-cell">
+										第2个选项卡子项-1
+									</li>-->
+								</ul>
+							</div>
+						</div>
+					</div>
+					<div id="item3mobile" class="mui-slider-item mui-control-content">
+						<div class="mui-scroll-wrapper">
+							<div class="mui-scroll">
+								<ul class="mui-table-view">
+									<!--<li class="mui-table-view-cell">
+										第3个选项卡子项-1
+									</li>-->
+								</ul>
+							</div>
+						</div>
+					</div>
+					<div id="item4mobile" class="mui-slider-item mui-control-content">
+						<div class="mui-scroll-wrapper">
+							<div class="mui-scroll">
+								<ul class="mui-table-view">
+									<!--<li class="mui-table-view-cell">
+										第4个选项卡子项-1
+									</li>-->
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script src="./js/mui.min.js"></script>
+		<script src="./js/mui.pullToRefresh.js"></script>
+		<script>
+			mui.init();
+			(function($) {
+				//阻尼系数
+				var deceleration = mui.os.ios ? 0.003 : 0.0009;
+				$('.mui-scroll-wrapper').scroll({
+					bounce: false,
+					indicators: true, //是否显示滚动条
+					deceleration: deceleration
+				});
+				mui(".mui-table-view").on('tap', '.mui-table-view-cell', function() {
+					var id = this.getAttribute("id");
+					var tabItem = this.parentNode.parentNode.parentNode.parentNode.id;
+					switch(tabItem) {
+						case "item1mobile":
+							mui.openWindow({
+								id: 'details_notice',
+								url: 'details_notice.html?id=' + id
+							});
+							break;
+						case "item2mobile":
+							mui.openWindow({
+								id: 'details_bidding',
+								url: 'details_bidding.html?id=' + id
+							});
+							break;
+						case "item3mobile":
+							mui.openWindow({
+								id: 'details_results',
+								url: 'details_results.html?id=' + id
+							});
+							break;
+						case "item4mobile":
+							mui.openWindow({
+								id: 'details_latestnew',
+								url: 'details_latestnew.html?id=' + id
+							});
+							break;
+					}
+				});
+				mui(".mui-input-row").on("tap","input",function(){
+					window.location="search.html";
+				});
+				$.ready(function() {
+//					document.getElementById("search").placeholder="sdfasd";
+					//循环初始化所有下拉刷新，上拉加载。
+					$.each(document.querySelectorAll('.mui-slider-group .mui-scroll'), function(index, pullRefreshEl) {
+						$(pullRefreshEl).pullToRefresh({
+							down: {
+								auto: true,
+								callback: function() {
+									var self = this;
+									setTimeout(function() {
+										var ul = self.element.querySelector('.mui-table-view');
+										ul.insertBefore(createFragment(ul, index, 10, true), ul.firstChild);
+										self.endPullDownToRefresh();
+									}, 1000);
+								}
+							},
+							up: {
+								auto: true,
+								callback: function() {
+									var self = this;
+									setTimeout(function() {
+										var ul = self.element.querySelector('.mui-table-view');
+										ul.appendChild(createFragment(ul, index, 5));
+										self.endPullUpToRefresh();
+									}, 1000);
+								}
+							}
+						});
+					});
+					var createFragment = function(ul, index, count, reverse) {
+						var length = ul.querySelectorAll('li').length;
+						var fragment = document.createDocumentFragment();
+						var li;
+						var id = ul.parentNode.parentNode.parentNode.id;
+						switch(id) {
+							case "item1mobile":
+								for(var i = 0; i < 7; i++) {
+									li = document.createElement('li');
+									li.className = 'mui-table-view-cell';
+									li.id = 'item' + i;
+									var liInnerHTML = '<div class="mui-table">';
+									liInnerHTML += '<div class="mui-table-cell mui-col-xs-10">';
+									liInnerHTML += '<h6 class="mui-ellipsis my-font"><b>青海钰容拍卖有限公司2017年首场异地网络拍卖会圆满成功</b></h6>';
+									liInnerHTML += '<p class="mui-h6 mui-ellipsis" style="color: red;">发布时间：2017/06/09</p>';
+									liInnerHTML += '</div>';
+									li.innerHTML = liInnerHTML;
+									fragment.appendChild(li);
+								}
+								return fragment;
+								break;
+							case "item2mobile":
+								for(var i = 0; i < count; i++) {
+									li = document.createElement('li');
+									li.id = "item" + i;
+									li.className = 'mui-table-view-cell';
+									var liInnerHTML = '<div class="mui-table">';
+									liInnerHTML += '<div class="mui-table-cell mui-col-xs-10">';
+									liInnerHTML += '<h6 class="mui-ellipsis my-font"><b>废包材（废纸皮、废纸、废电子料带等）转让(范例四)</b></h6>';
+									liInnerHTML += '<h6>类别：生活用品</h6>';
+									liInnerHTML += '<p class="mui-h6 mui-ellipsis" style="color: red;">公示日期：2017-05-24</p>';
+									liInnerHTML += '</div>';
+									liInnerHTML += '<div class="mui-table-cell mui-col-xs-2 mui-text-right">';
+									liInnerHTML += '<span class="mui-h5" style="color: blue;">龙华 </span>';
+									liInnerHTML += '</div>';
+									liInnerHTML += '</div>';
+									li.innerHTML = liInnerHTML;
+									fragment.appendChild(li);
+								}
+								return fragment;
+								break;
+							case "item3mobile":
+								for(var i = 0; i < count; i++) {
+									li = document.createElement('li');
+									li.id = "item" + i;
+									li.className = 'mui-table-view-cell';
+									var liInnerHTML = '<div class="mui-table">';
+									liInnerHTML += '<div class="mui-table-cell mui-col-xs-10">';
+									liInnerHTML += '<h6 class="mui-ellipsis my-font"><b>废包材（废纸皮、废纸、废电子料带等）转让(范例四)</b></h6>';
+									liInnerHTML += '<h6>成交价格：534,000.00RMB</h6>';
+									liInnerHTML += '<p class="mui-h6 mui-ellipsis">公示日期：2017-05-24</p>';
+									liInnerHTML += '<h6>买      方：深圳市鸿业通电子设备有限公司</h6>';	
+									liInnerHTML += '</div>';
+									liInnerHTML += '<div class="mui-table-cell mui-col-xs-2 mui-text-right">';
+									liInnerHTML += '<span class="mui-h5" style="color: blue;">龙华 </span>';
+									liInnerHTML += '</div>';
+									liInnerHTML += '</div>';
+									li.innerHTML = liInnerHTML;
+									fragment.appendChild(li);
+								}
+								return fragment;
+								break;
+							case "item4mobile":
+								for(var i = 0; i < count; i++) {
+									li = document.createElement('li');
+									li.id = "item" + i;
+									li.className = 'mui-table-view-cell';
+									var liInnerHTML = '<div class="mui-table">';
+									liInnerHTML += '';
+									liInnerHTML += '<div class="mui-table-cell mui-col-xs-10">';
+									liInnerHTML += '<h6 class="mui-ellipsis my-font"><b> 针对《SMT汰旧设备超声波清洗机、回流焊炉、自动贴片机、锡膏测厚仪、波峰焊锡炉锡膏印刷机等共9台设备转让(标6)》标案的信息变更说明</b></h6>';
+									liInnerHTML += '<p class="mui-h6 mui-ellipsis">时间：2017-06-19 09:00</p>';
+									liInnerHTML += '</div>';
+									liInnerHTML += '</div>';
+									li.innerHTML = liInnerHTML;
+									fragment.appendChild(li);
+								}
+								return fragment;
+								break;
+						}
+					};
+				});
+			})(mui);
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>钜商网-知名企业招标拍卖平台</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<!--标准mui.css-->
+		<link rel="stylesheet" href="css/mui.min.css">
+		<link href="css/mui.picker.css" rel="stylesheet" />
+		<link href="css/mui.poppicker.css" rel="stylesheet" />
+		<style>
+			.mui-btn {
+				font-size: 20px;
+				padding: 8px;
+				margin: 3px;
+			}
+			
+			h5.mui-content-padded {
+				margin-left: 3px;
+				margin-top: 20px !important;
+			}
+			
+			h5.mui-content-padded:first-child {
+				margin-top: 12px !important;
+			}
+			
+			.ui-alert {
+				text-align: center;
+				padding: 20px 10px;
+				font-size: 16px;
+			}
+			
+			* {
+				font-family: "微软雅黑";
+				font-size: 17px;
+			}
+			
+			.mui-input-row label {
+				font-family: "微软雅黑";
+				font-size: 17px;
+			}
+		</style>
+
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav" style="background-color: rgb(29, 38, 60);">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title" style="color:orangered;">在线报名</h1>
+		</header>
+		<div class="mui-content">
+			<br />
+			<center>充值金额</center>
+			<form class="mui-input-group" style="margin-top:10px;">
+				<!--<div class="mui-input-row mui-radio">
+					<label>30元</label>
+					<input name="rad" value="30" type="radio" onclick="setoff()">
+				</div>
+				<div class="mui-input-row mui-radio">
+					<label>50元</label>
+					<input name="rad" value="50" type="radio" onclick="setoff()">
+				</div>
+				<div class="mui-input-row mui-radio">
+					<label>100元</label>
+					<input name="rad" value="100" type="radio" onclick="setoff()">
+				</div>-->
+				<div class="mui-input-row mui-radio">
+					<label>200元</label>
+					<input name="rad" value="200" type="radio" checked="checked" onclick="setoff()">
+				</div>
+				<!--<div class="mui-input-row mui-radio">
+					<label>其他金额</label>
+					<input name="rad" value="other" type="radio" onclick="seton()">
+				</div>-->
+
+				<div class="mui-input-row" id="o" style="display:none;">
+					<input id="mon" type="text" style="width:60%;" class="mui-input-clear" placeholder="请输入其他金额">
+				</div>
+			</form>
+			<br/>
+			<!--<button id="ali_pay" class="mui-btn mui-btn-green mui-btn-success mui-btn-block">支付宝支付</button>-->
+			<button id="wx_pay" class="mui-btn mui-btn-green mui-btn-success mui-btn-block">微信支付</button>
+		</div>
+	</body>
+	<script src="js/mui.min.js"></script>
+	<script src="js/mui.zoom.js"></script>
+	<script src="js/mui.previewimage.js"></script>
+	<script src="js/mui.picker.js"></script>
+	<script src="js/mui.poppicker.js"></script>
+	<script src="js/pub.js"></script>
+	<script>
+		function seton() {
+			var o = document.getElementById("o");
+			o.style.display = "block";
+		}
+
+		function setoff() {
+			var o = document.getElementById("o");
+			o.style.display = "none";
+		}
+
+		function getValue() {
+			var radio = document.getElementsByName("rad");
+			var result;
+			for(var i = 0; i < radio.length; i++) {
+				if(radio[i].checked) {
+					result = radio[i].value;
+				}
+			}
+			if(result == "other") {
+				var mon = document.getElementById("mon");
+				var value = mon.value;
+				return value;
+			} else {
+				return result;
+			}
+		}
+	</script>
+	<script type="text/javascript" charset="utf-8">
+		(function(mui, doc) {
+			mui.init({
+				swipeBack: true //启用右滑关闭功能
+			});
+			var url = OCS.getUrl();
+			var wxChannel = null; // 微信支付
+			var aliChannel = null; //支付宝支付
+			var channel = null;
+			var w = null;
+
+			mui.plusReady(function() {
+				plus.payment.getChannels(function(channels) {
+					aliChannel = channels[0];
+					wxChannel = channels[1];
+				}, function(e) {
+					alert("获取支付通道失败:" + e.message);
+				});
+				document.getElementById("ali_pay").addEventListener('tap', function() {
+					console.log("支付宝");
+					pay("alipay");
+				});
+				document.getElementById("wx_pay").addEventListener('tap', function() {
+					console.log("微信");
+					pay("wxpay");
+				});
+			});
+
+			function pay(id) {
+				if(w) {
+					return;
+				} else if(id == 'alipay') {
+					channel = aliChannel;
+				} else if(id = 'wxpay') {
+					channel = wxChannel;
+				} else {
+					plus.nativeUI.alert("不支持此支付通道！", null, "充值");
+					return;
+				}
+
+				var amount = getValue();
+				mui.post(url + 'MAP', {
+					psncode: window.localStorage.getItem(OCS.token.TOKEN_USER),
+					total: amount,
+					token: window.localStorage.getItem(OCS.token.TOKEN_TOKEN)
+				}, function(data) {
+					var str = 'partner = "' + data.resultData.partner + '" & ' + 'seller_id = "' + data.resultData.seller_id;
+					str += '"&' + 'out_trade_no="' + data.resultData.out_trade_no + '"&' + 'subject="' + data.resultData.subject;
+					str += '"&' + 'body="' + data.resultData.body + '"&' + 'total_fee="' + amount;
+					str += '"&' + 'notify_url="' + "http://notify.msp.hk/notify.htm";
+					str += '"&' + 'service="' + data.resultData.service;
+					str += '"&' + 'payment_type="' + data.resultData.payment_type + '"&' + '_input_charset="' + data.resultData.input_charset;
+					str += '"&' + 'it_b_pay="' + data.resultData.it_b_pay + '"&' + 'return_url="' + data.resultData.return_url;
+					str += '"&' + 'sign="' + data.resultData.sign + '"&' + 'sign_type="' + data.resultData.sign_type + '"';
+					//alert(str);
+					window.localStorage.setItem(OCS.token.orderMseeage, data.resultData.out_trade_no);
+					if(data.success + "" == "true") {
+						plus.payment.request(channel, str, function(result) {
+							plus.nativeUI.alert("支付成功", function() {
+								notify();
+							}, "充值成功！");
+						}, function(error) {
+							mui.alert(error.message);
+							plus.nativeUI.alert(error.message, null, "支付失败：" + error.code);
+						});
+					}
+				}, 'json');
+			}
+
+			function notify() {
+				mui.post(url + "MAPS", {
+					out_trade_no: window.localStorage.getItem(OCS.token.orderMseeage),
+					token: window.localStorage.getItem(OCS.token.TOKEN_TOKEN)
+				}, function(data) {
+					if(data.success + '' == "true") {
+						mui.alert('您已充值成功');
+					}
+				}, 'json');
+			}
+		})(mui, document);
+	</script>
+
+</html>
