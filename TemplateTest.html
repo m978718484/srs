@@ -1,0 +1,59 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.min.css" rel="stylesheet" />
+	</head>
+
+	<body>
+<form action="#" method="post">
+   <p><input type="text" name="first" tabindex="10" /></p>
+   <p><input type="text" name="second" tabindex="20" /></p>
+   <p>
+      <select name="third" tabindex="30">
+           <option value="foo">Foo</option>
+           <option value="bar">Bar</option>
+      </select>
+   </p>
+   <p>
+      <select name="fourth" tabindex="40">
+           <option value="foo">Foo</option>
+           <option value="bar">Bar</option>
+      </select>
+   </p>
+   <p><input type="text" name="fifth" tabindex="50" /></p>
+   <input type="submit" value="Submit" tabindex="100" />
+</form>
+		<div id="content"></div>
+		<script id="test" type="text/html">
+			{{if isAdmin}}
+
+			<h1>{{title}}</h1>
+			<ul>
+				{{each list value i}}
+				<li>索引 {{i + 1}} ：{{value}}</li>
+				{{/each}}
+			</ul>
+			{{/if}}
+			<!--{{$data}}-->
+		</script>
+		<script type="text/javascript" src="js/template-web.js"></script>
+		<script src="js/mui.min.js"></script>
+		<script type="text/javascript">
+			mui.init()
+		</script>
+		<script>
+			var data = {
+				title: '基本例子',
+				isAdmin: true,
+				list: ['文艺', '博客', '摄影', '电影', '民谣', '旅行', '吉他']
+			};
+			var html = template('test', data);
+			document.getElementById('content').innerHTML = html;
+		</script>
+	</body>
+
+</html>

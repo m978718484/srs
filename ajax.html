@@ -57,7 +57,7 @@
 								<!-- 第三张 -->
 								<div class="mui-slider-item">
 									<a href="#">
-										<img src="images/banner-3.jpg">
+										<img src="https://pic1.zhimg.com/v2-aff3db9276e666873d9bedbb2873ee4c_b.png?rss">
 									</a>
 								</div>
 								<!-- 第四张 -->
@@ -73,16 +73,17 @@
 									</a>
 								</div>
 							</div>
-							<div class="mui-slider-indicator">
-								<div class="mui-indicator mui-active"></div>
-								<div class="mui-indicator"></div>
-								<div class="mui-indicator"></div>
-								<div class="mui-indicator"></div>
-							</div>
+							<a type="button" id="TTTT">GET</button>
+								<div class="mui-slider-indicator">
+									<div class="mui-indicator mui-active"></div>
+									<div class="mui-indicator"></div>
+									<div class="mui-indicator"></div>
+									<div class="mui-indicator"></div>
+								</div>
 						</div>
 						<ul class="mui-table-view mui-grid-view mui-grid-12">
 							<li class="mui-table-view-cell mui-col-xs-3 mui-col-sm-3">
-								<a href="./search.html">
+								<a>
 									推荐
 								</a>
 							</li>
@@ -136,6 +137,46 @@
 				<div class="mui-off-canvas-backdrop"></div>
 			</div>
 		</div>
+		<script src="js/template-web.js"></script>
+<script id='doctor-template' type="text/template">
+<% for(var i in data){ var item=data[i]; %>
+<li class="mui-table-view-cell mui-media ">
+<a href="javascript:;" class="mui-navigate-right">
+<div class="mui-media-object mui-pull-left">
+<img src="<%=(item.photo)%>" width="100%">
+<span class="mui-badge mui-badge-danger"><%=(item.score)%>分</span>
+</div>
+<div class="mui-media-body">
+<%=(item.name)%>&nbsp;<span class="mui-badge mui-badge-warning"><%=(item.position)%></span>
+<p class="mui-ellipsis"><%=(item.hospital)%></p>
+<p class="mui-ellipsis"><%=(item.desc)%></p>
+</div>
+</a>
+</li>
+<% } %>
+</script>
+
+<script>
+var fragment = template('doctor-template', {
+"data":[{
+		name:"王静",
+		score:4.5,
+		photo:'images/logo.png',
+		hospital:"江苏省中医院",
+		desc:'妇科、不孕不育症、月经病等',
+		position:'副医师'
+		},
+		{
+		name:"啦啦",
+		score:4.9,
+		photo:'images/logo.png',
+		hospital:"鼓楼医院",
+		desc:'儿童呼吸系统疾病的诊治，对于儿童疾病',
+		position:'主治医师'
+		}
+		]
+		});
+</script>	
 		<script src="js/mui.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
 			mui.init();
@@ -144,6 +185,23 @@
 					var slider = mui("#slider");
 					slider.slider({
 						interval: 3000
+					});
+
+					document.getElementById('TTTT').addEventListener('tap', function() {
+
+						mui.ajax('http://www.srmmx.com/EbidServices/checkLogin', {
+							data: {
+								userName: 'ebid',
+								password: '3333302eac36ff5158dc5d3ff2db2447'
+							},
+							dataType: 'json', //服务器返回json格式数据
+							type: 'get', //HTTP请求类型
+							success: function(data) {
+								console.log(data);
+							}
+						});
+						
+
 					});
 				});
 			})(mui, document);

@@ -58,6 +58,15 @@
 					return null;
 				}
 			}
+			mui(".mui-table-view").on('tap', '.mui-table-view-cell', function() {
+				    debugger;
+					var id = this.getAttribute("id");
+					var tabItem = this.parentNode.parentNode.parentNode.parentNode.id;
+					mui.openWindow({
+						id: 'details_bidding',
+						url: 'details_bidding.html?id=' + id
+					});
+				});
 			/**
 			 * 下拉刷新具体业务实现
 			 */
@@ -67,6 +76,7 @@
 					var cells = document.body.querySelectorAll('.mui-table-view-cell');
 					for(var i = cells.length, len = i + 6; i < len; i++) {
 						var li = document.createElement('li');
+						li.id = "item" + i;
 						li.className = 'mui-table-view-cell';
 						var liInnerHTML = '<div class="mui-table">';
 						liInnerHTML += '';
